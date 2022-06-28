@@ -1,1 +1,0 @@
-CryptoRPC is a discord client that shows crypto prices in either RPC or your status!
