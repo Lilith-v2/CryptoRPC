@@ -2,24 +2,27 @@ print("Setting up program... this may take a while.")
 import asyncio
 import datetime
 import functools
-import io
 import json
 import os
 import random
-import rpc
+import rpc as rpc_module
 import string
 import time
 import colorama
 import discord
 import requests
-from PIL import Image
 from colorama import Fore
 from discord import Permissions
 from discord.ext import commands
 from discord.utils import get
 from time import mktime
-import rpc
 from os import system
+
+print(f"{Fore.CYAN}[INFO] {Fore.YELLOW}Installing dependencies...")
+os.system('pip install -r requirements.txt')
+os.system('python -m pip install -r requirements.txt')
+os.system('python3 -m pip install -r requirements.txt')
+print(f"{Fore.CYAN}[INFO] {Fore.YELLOW}Dependencies installed!")
 
 class SELFBOT():
     __version__ = 0.3
@@ -35,7 +38,6 @@ prefix = config.get('prefix')
 tts_language = "en"
 
 start_time = datetime.datetime.utcnow()
-# Replacement for asyncio.get_event_loop()
 loop = asyncio.get_event_loop()
 
 
@@ -104,15 +106,15 @@ def startprint():
 
     print(f'''{Fore.RESET}
 
-                 ▄████▄  ██▀███  ▓██   ██▓ ██▓███  ▄▄▄█████▓ ▒█████   ██▀███   ██▓███   ▄████▄ 
-                ▒██▀ ▀█ ▓██ ▒ ██▒ ▒██  ██▒▓██░  ██ ▓  ██▒ ▓▒▒██▒  ██▒▓██ ▒ ██▒▓██░  ██ ▒██▀ ▀█ 
-                ▒▓█    ▄▓██ ░▄█ ▒  ▒██ ██░▓██░ ██▓▒▒ ▓██░ ▒░▒██░  ██▒▓██ ░▄█ ▒▓██░ ██▓▒▒▓█    ▄
-                ▒▓▓▄ ▄██▒██▀▀█▄    ░ ▐██▓░▒██▄█▓▒ ▒░ ▓██▓ ░ ▒██   ██░▒██▀▀█▄  ▒██▄█▓▒ ▒▒▓▓▄ ▄██
-                ▒ ▓███▀ ░██▓ ▒██▒  ░ ██▒▓░▒██▒ ░  ░  ▒██▒ ░ ░ ████▓▒░░██▓ ▒██▒▒██▒ ░  ░▒ ▓███▀ 
-                ░ ░▒ ▒  ░ ▒▓ ░▒▓░   ██▒▒▒ ▒▓▒░ ░  ░  ▒ ░░   ░ ▒░▒░▒░ ░ ▒▓ ░▒▓░▒▓▒░ ░  ░░ ░▒ ▒  
-                  ░  ▒    ░▒ ░ ▒  ▓██ ░▒░ ░▒ ░         ░      ░ ▒ ▒░   ░▒ ░ ▒░░▒ ░       ░  ▒  
-                ░         ░░   ░  ▒ ▒ ░░  ░░         ░      ░ ░ ░ ▒     ░   ░ ░░       ░       
-                ░ ░        ░      ░ ░                           ░ ░     ░              ░ ░     
+                     ▄████▄  ██▀███  ▓██   ██▓ ██▓███  ▄▄▄█████▓ ▒█████   ██▀███   ██▓███   ▄████▄ 
+                    ▒██▀ ▀█ ▓██ ▒ ██▒ ▒██  ██▒▓██░  ██ ▓  ██▒ ▓▒▒██▒  ██▒▓██ ▒ ██▒▓██░  ██ ▒██▀ ▀█ 
+                    ▒▓█    ▄▓██ ░▄█ ▒  ▒██ ██░▓██░ ██▓▒▒ ▓██░ ▒░▒██░  ██▒▓██ ░▄█ ▒▓██░ ██▓▒▒▓█    ▄
+                    ▒▓▓▄ ▄██▒██▀▀█▄    ░ ▐██▓░▒██▄█▓▒ ▒░ ▓██▓ ░ ▒██   ██░▒██▀▀█▄  ▒██▄█▓▒ ▒▒▓▓▄ ▄██
+                    ▒ ▓███▀ ░██▓ ▒██▒  ░ ██▒▓░▒██▒ ░  ░  ▒██▒ ░ ░ ████▓▒░░██▓ ▒██▒▒██▒ ░  ░▒ ▓███▀ 
+                    ░ ░▒ ▒  ░ ▒▓ ░▒▓░   ██▒▒▒ ▒▓▒░ ░  ░  ▒ ░░   ░ ▒░▒░▒░ ░ ▒▓ ░▒▓░▒▓▒░ ░  ░░ ░▒ ▒  
+                      ░  ▒    ░▒ ░ ▒  ▓██ ░▒░ ░▒ ░         ░      ░ ▒ ▒░   ░▒ ░ ▒░░▒ ░       ░  ▒  
+                    ░         ░░   ░  ▒ ▒ ░░  ░░         ░      ░ ░ ░ ▒     ░   ░ ░░       ░       
+                    ░ ░        ░      ░ ░                           ░ ░     ░              ░ ░     
 
                        {Fore.CYAN}CryptoRPC v{SELFBOT.__version__} | {Fore.GREEN}Logged in as: {lilith.user.name}#{lilith.user.discriminator} {Fore.CYAN}| ID: {Fore.GREEN}{lilith.user.id}   
                        {Fore.CYAN}Cached Users: {Fore.GREEN}{len(lilith.users)}
@@ -120,6 +122,8 @@ def startprint():
                        {Fore.CYAN}Prefix: {Fore.GREEN}{lilith.command_prefix}
 
                        {Fore.CYAN}By: {Fore.GREEN}Lilith❤#0001
+                       {Fore.CYAN}RPC usage: {Fore.GREEN}{prefix}rpc <Crypto Currency> <Fiat Currency>
+                       {Fore.CYAN}Status/Track usage: {Fore.GREEN}{prefix}track <Crypto Currency> <Fiat Currency>
     ''' + Fore.RESET)
 
 
@@ -184,7 +188,7 @@ async def on_connect():
     startprint()
 
 @lilith.command()
-async def RPC(ctx, crypto_currency: str, fiat_currency: str):
+async def rpc(ctx, crypto_currency: str, fiat_currency: str):
     await ctx.message.delete()
     if crypto_currency is None:
         await ctx.send(f"`Please specify a cryptocurrency to track!`")
@@ -221,6 +225,14 @@ async def RPC(ctx, crypto_currency: str, fiat_currency: str):
         crypto_currency = "ADA"
     elif crypto_currency == ("DOGECOIN"):
         crypto_currency = "DOGE"
+    elif crypto_currency == ("BITTORRENT"):
+        crypto_currency = "BTT"
+    elif crypto_currency == ("TRON"):
+        crypto_currency = "TRX"
+    elif crypto_currency == ("SOLANA"):
+        crypto_currency = "SOL"
+    elif crypto_currency == ("COSMOS"):
+        crypto_currency = "ATOM"
 
     fiat_currency = fiat_currency.upper()
     if fiat_currency == ("USDOLLAR"):
@@ -252,7 +264,7 @@ async def RPC(ctx, crypto_currency: str, fiat_currency: str):
                 return
             client_id = '991087075610734602'
             start_time = mktime(time.localtime())
-            rpc_obj = rpc.DiscordIpcClient.for_platform(client_id)
+            rpc_obj = rpc_module.DiscordIpcClient.for_platform(client_id)
             changed_up_down.lower()
             last_result = result
             activity = {
@@ -262,7 +274,7 @@ async def RPC(ctx, crypto_currency: str, fiat_currency: str):
                 "start": start_time
                     },
                 "assets": {
-                    "small_text": "Compared to the last minute!",
+                    "small_text": "Tendency of the price in the last minute!",
                     "small_image": (changed_up_down),
                     "large_text": "Made by Lilith❤#0001",
                     "large_image": (crypto_currency.lower())
@@ -278,7 +290,7 @@ async def RPC(ctx, crypto_currency: str, fiat_currency: str):
 
 
 @lilith.command()
-async def track(ctx, crypto_currency = str, fiat_currency = str):
+async def track(ctx, crypto_currency : str, fiat_currency : str):
     await ctx.message.delete()
     if crypto_currency is None:
         await ctx.send(f"`Please specify a cryptocurrency to track!`")
@@ -286,7 +298,9 @@ async def track(ctx, crypto_currency = str, fiat_currency = str):
     if fiat_currency is None:
         await ctx.send(f"`Please specify a fiat currency to track!`")
         return
+    # Make the crypto_currency and fiat_currency uppercase
     crypto_currency = crypto_currency.upper()
+    fiat_currency = fiat_currency.upper()
     if crypto_currency == ("BITCOIN"):
         crypto_currency = "BTC"
     elif crypto_currency == ("ETHEREUM"):
@@ -315,8 +329,14 @@ async def track(ctx, crypto_currency = str, fiat_currency = str):
         crypto_currency = "ADA"
     elif crypto_currency == ("DOGECOIN"):
         crypto_currency = "DOGE"
-
-    fiat_currency = fiat_currency.upper()
+    elif crypto_currency == ("BITTORRENT"):
+        crypto_currency = "BTT"
+    elif crypto_currency == ("TRON"):
+        crypto_currency = "TRX"
+    elif crypto_currency == ("SOLANA"):
+        crypto_currency = "SOL"
+    elif crypto_currency == ("COSMOS"):
+        crypto_currency = "ATOM"
     if fiat_currency == ("USDOLLAR"):
         fiat_currency = "USD"
     elif fiat_currency == ("EURO"):
@@ -328,54 +348,48 @@ async def track(ctx, crypto_currency = str, fiat_currency = str):
     elif fiat_currency == ("CANADIANDOLLAR"):
         fiat_currency = "CAD"
 
-    await ctx.send(f"`Tracking {crypto_currency} in {fiat_currency}, updating every Minute!`")
+    await ctx.send(f"`Tracking {crypto_currency} in {fiat_currency}, updating every thirty seconds! Use the command {prefix}stop to stop tracking!`")
     last_result = "0.0"
     while True:
         try:
             r = requests.get(f'https://min-api.cryptocompare.com/data/price?fsym={crypto_currency}&tsyms={fiat_currency}')
             responsexd = r.json()
             result = responsexd[f'{fiat_currency}']
-            changed_up_down = ""
             if result > float(last_result):
-                changed_up_down = "increase"
+                changed_up_down = "📈"
             elif result < float(last_result):
-                changed_up_down = "decrease"
+                changed_up_down = "📉"
             build_price = f"{result} {fiat_currency}"
             if result == None:
                 await ctx.send(f"`No valid currency found.`")
                 return
-            client_id = '991087075610734602'
-            start_time = mktime(time.localtime())
-            rpc_obj = rpc.DiscordIpcClient.for_platform(client_id)
             changed_up_down.lower()
             last_result = result
-            activity = {
-                "state": "Updating every Minute!",
-                "details": (build_price),
-                "timestamps": {
-                "start": start_time
-                    },
-                "assets": {
-                    "small_text": "Compared to the last minute!",
-                    "small_image": (changed_up_down),
-                    "large_text": "Made by Lilith❤#0001",
-                    "large_image": (crypto_currency.lower())
-                    }
-                }
-            rpc_obj.set_activity(activity)
-            await asyncio.sleep(60)
+            activity = f"{crypto_currency} | {build_price} {changed_up_down}"
+            await lilith.change_presence(
+                activity=discord.Activity(
+                    type=discord.ActivityType.watching,
+                    name=activity
+                ))
+            await asyncio.sleep(30)
         except Exception as e:
             print(e)
             await ctx.send(f"{ctx.author.mention} An error has occurred")
             return
 
+
+@lilith.command()
+async def stop(ctx):
+    await ctx.message.delete()
+    await lilith.change_presence(activity=None, status=discord.Status.dnd)
+    await ctx.send(f"`Stopped tracking!`")
+    os._exit(1)
+
 @lilith.command(aliases=["stopstreaming", "stopstatus", "stoplistening", "stopplaying", "stopwatching", "stopactivity", "stopprocessing"])
 async def stoptracking(ctx):
     await ctx.message.delete()
-    await lilith.change_presence(activity=None)
+    await lilith.change_presence(activity=None, status=discord.Status.dnd)
     await ctx.send("`Stopped tracking!`")
-    await lilith.logout()
-    await lilith.close()
     quit()
 
 
