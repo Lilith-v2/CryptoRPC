@@ -1,5 +1,4 @@
 discord.py
 colorama
 requests
-string
-functools
+discord
