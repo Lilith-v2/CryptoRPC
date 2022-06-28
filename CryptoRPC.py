@@ -32,7 +32,6 @@ with open('config.json') as f:
     config = json.load(f)
 
 token = config.get('token')
-password = config.get('password')
 prefix = config.get('prefix')
 
 tts_language = "en"
