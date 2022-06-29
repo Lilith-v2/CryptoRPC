@@ -1,4 +1,6 @@
 print("Setting up program... this may take a while.")
+from os import system
+os.system('python -m pip install -r requirements.txt')
 import asyncio
 import datetime
 import functools
@@ -16,7 +18,6 @@ from discord import Permissions
 from discord.ext import commands
 from discord.utils import get
 from time import mktime
-from os import system
 
 class SELFBOT():
     __version__ = 0.3
